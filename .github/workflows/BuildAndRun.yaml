@@ -64,11 +64,15 @@ jobs:
         run: |
           cd ~/ros2_ws
           apt-get update
-          apt install python3.8
           apt install -y python3-pip
           rosdep update --include-eol-distros
           rosdep install -iy --from-paths src --rosdistro ${{ matrix.rosdistro }}
         shell: bash
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
 
       - name: Install PyYAML
         run: |
