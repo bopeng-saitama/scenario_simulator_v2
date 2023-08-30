@@ -67,7 +67,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install PyYAML
+          python -m pip install PyYAML
 
       - name: Generate test configuration file
         run: |
