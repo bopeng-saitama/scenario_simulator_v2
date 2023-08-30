@@ -64,6 +64,7 @@ jobs:
         run: |
           cd ~/ros2_ws
           apt-get update
+          apt install python3.8
           apt install -y python3-pip
           rosdep update --include-eol-distros
           rosdep install -iy --from-paths src --rosdistro ${{ matrix.rosdistro }}
