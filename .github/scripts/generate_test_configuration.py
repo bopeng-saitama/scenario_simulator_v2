@@ -13,12 +13,13 @@ new_workflow = {
 
 # Add modified or created scenarios to the new test configuration file
 for file in modified_files:
-  if file.startswith("scenario_test_runner/scenario/") and file.endswith(".yaml"):
+  if file.startswith("test_runner/scenario_test_runner/scenario/") and file.endswith(".yaml"):
     scenario_path = "$(find-pkg-share scenario_test_runner)/" + file
     new_workflow["scenarios"].append({"path": scenario_path})
 
 # Write the new test configuration file
-new_workflow_file = os.path.join(os.path.dirname(__file__), '..', '..', 'scenario_test_runner', 'config', 'new_workflow.yaml')
+new_workflow_file = os.path.join(os.path.dirname(__file__), '..', '..', 'test_runner', 'scenario_test_runner', 'config', 'new_workflow.yaml')
 
 with open(new_workflow_file, 'w') as f:
     yaml.dump(new_workflow, f)
+
