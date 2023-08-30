@@ -1,82 +1,49 @@
 ScenarioModifiers:
-  ScenarioModifier: []
+  ScenarioModifier:
+    - name: LANE_ID
+      list: [34513, 34510, 34564]
 OpenSCENARIO:
   FileHeader:
+    author: 'Tatsuya Yamasaki'
+    date: '2022-03-04T18:06:53+09:00'
+    description: 'Sample scenario (with Autoware)'
     revMajor: 1
-    revMinor: 1
-    date: '2023-08-28T08:52:46.448Z'
-    description: ''
-    author: Bo Peng
+    revMinor: 0
   ParameterDeclarations:
     ParameterDeclaration:
-      - name: __ego_dimensions_length__
+      - name: random_offset
         parameterType: double
-        value: '0'
-      - name: __ego_dimensions_width__
-        parameterType: double
-        value: '0'
-      - name: __ego_dimensions_height__
-        parameterType: double
-        value: '0'
-      - name: __ego_center_x__
-        parameterType: double
-        value: '0'
-      - name: __ego_center_y__
-        parameterType: double
-        value: '0'
-      - name: __ego_center_z__
-        parameterType: double
-        value: '0'
+        value: $(ros2 run openscenario_interpreter_example uniform_distribution -1.0 1.0)
+        ConstraintGroup:
+          - ValueConstraint:
+            - rule: lessOrEqual
+              value: 1.0
+            - rule: greaterOrEqual
+              value: -1.0
   CatalogLocations:
-    CatalogLocation: []
+    VehicleCatalog:
+      Directory:
+        path: $(ros2 pkg prefix --share openscenario_experimental_catalog)/vehicle
   RoadNetwork:
     LogicFile:
-      filepath: lanelet2_map.osm
-    SceneGraphFile:
-      filepath: lanelet2_map.pcd
-    TrafficSignals:
-      TrafficSignalController: []
+      filepath: $(ros2 pkg prefix --share kashiwanoha_map)/map
   Entities:
     ScenarioObject:
       - name: ego
-        Vehicle:
-          name: ''
-          vehicleCategory: car
-          BoundingBox:
-            Center:
-              x: 1.355
-              y: 0
-              z: 1.25
-            Dimensions:
-              length: 4.77
-              width: 1.83
-              height: 2.5
-          Performance:
-            maxSpeed: 50
-            maxAcceleration: INF
-            maxDeceleration: INF
-          Axles:
-            FrontAxle:
-              maxSteering: 0.5236
-              wheelDiameter: 0.78
-              trackWidth: 1.63
-              positionX: 1.385
-              positionZ: 0.39
-            RearAxle:
-              maxSteering: 0.5236
-              wheelDiameter: 0.78
-              trackWidth: 1.63
-              positionX: 0
-              positionZ: 0.39
-          Properties:
-            Property: []
+        CatalogReference:
+          catalogName: sample_vehicle
+          entryName: sample_vehicle
         ObjectController:
           Controller:
             name: ''
             Properties:
               Property:
                 - name: isEgo
-                  value: 'true'
+                  value: "true"
+                - name: maxJerk
+                  value: "1.5"
+                - name: minJerk
+                  value: "-1.5"
   Storyboard:
     Init:
       Actions:
@@ -87,26 +54,26 @@ OpenSCENARIO:
                   Position:
                     LanePosition:
                       roadId: ''
-                      laneId: '9102'
-                      s: 10.778
-                      offset: 0.2118
+                      laneId: LANE_ID
+                      s: 1
+                      offset: $random_offset
                       Orientation:
                         type: relative
                         h: 0
-                        p: -0.0
+                        p: 0
                         r: 0
               - RoutingAction:
                   AcquirePositionAction:
                     Position:
                       LanePosition:
                         roadId: ''
-                        laneId: '9178'
-                        s: 0.523
-                        offset: -0.0728
+                        laneId: '34507'
+                        s: 50
+                        offset: 0
                         Orientation:
                           type: relative
                           h: 0
-                          p: -0.0
+                          p: 0
                           r: 0
     Story:
       - name: ''
@@ -140,15 +107,39 @@ OpenSCENARIO:
                                         Position:
                                           LanePosition:
                                             roadId: ''
-                                            laneId: '9178'
-                                            s: 0.523
-                                            offset: -0.0728
+                                            laneId: '34507'
+                                            s: 50
+                                            offset: 0
                                             Orientation:
                                               type: relative
                                               h: 0
-                                              p: -0.0
+                                              p: 0
                                               r: 0
-                                        tolerance: 1
+                                        tolerance: 0.5
+                                - name: ''
+                                  delay: 0
+                                  conditionEdge: none
+                                  ByValueCondition:
+                                    UserDefinedValueCondition:
+                                      name: RelativeHeadingCondition(ego, 34507, 50)
+                                      rule: lessThan
+                                      value: 0.1
+                                - name: ''
+                                  delay: 0
+                                  conditionEdge: none
+                                  ByValueCondition:
+                                    UserDefinedValueCondition:
+                                      name: RelativeHeadingCondition(ego)
+                                      rule: lessThan
+                                      value: 0.1
+                                - name: ''
+                                  delay: 0
+                                  conditionEdge: none
+                                  ByValueCondition:
+                                    UserDefinedValueCondition:
+                                      name: ego.currentMinimumRiskManeuverState.state
+                                      rule: equalTo
+                                      value: NORMAL
                         Action:
                           - name: ''
                             UserDefinedAction:
