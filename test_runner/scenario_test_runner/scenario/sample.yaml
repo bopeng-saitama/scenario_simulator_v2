@@ -5,7 +5,7 @@ ScenarioModifiers:
 OpenSCENARIO:
   FileHeader:
     author: 'Tatsuya Yamasaki'
-    date: '2022-03-04T18:06:53+09:00'
+    date: '2022-03-02T18:06:53+09:00'
     description: 'Sample scenario (with Autoware)'
     revMajor: 1
     revMinor: 0
