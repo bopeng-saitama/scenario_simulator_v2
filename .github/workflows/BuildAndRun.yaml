@@ -55,6 +55,15 @@ jobs:
           cp -rf . ~/ros2_ws/src/scenario_simulator_v2
         shell: bash
 
+      - name: Cache build
+        id: cache-build
+        uses: actions/cache@v2
+        with:
+          path: ~/ros2_ws
+          key: ${{ runner.os }}-build-${{ hashFiles('**/package.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+            
       - name: Install dependencies
         run: |
           cd ~/ros2_ws
@@ -90,6 +99,7 @@ jobs:
       #     path: .github/scripts/new_workflow.yaml
 
       - name: Build packages
+        if: steps.cache-build.outputs.cache-hit != 'true'
         run: |
           source /opt/ros/${{ matrix.rosdistro }}/setup.bash
           cd ~/ros2_ws
