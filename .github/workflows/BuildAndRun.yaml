@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   schedule:
     - cron: 0 0 * * *
+on:
   pull_request:
     paths:
       - '**'
@@ -17,6 +18,7 @@ on:
   push:
     branches:
       - master
+
 jobs:
   job1:
     name: BuildAndRun
@@ -59,6 +61,19 @@ jobs:
           cd ~/ros2_ws
           vcs import src < src/scenario_simulator_v2/dependency_${{ matrix.rosdistro }}.repos
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+
+      - name: Install dependencies
+        run: |
+          pip install PyYAML
+
+      - name: Generate test configuration file
+        run: |
+          python .github/scripts/generate_test_configuration.py
+
       - name: Resolve rosdep
         run: |
           cd ~/ros2_ws
@@ -97,6 +112,6 @@ jobs:
           source ~/ros2_ws/install/setup.bash
           cd ~/ros2_ws
           source install/local_setup.bash
-          ros2 launch scenario_test_runner scenario_test_runner.launch.py workflow:='$(find-pkg-share scenario_test_runner)/scenario/sample.yaml' global_frame_rate:=20
+          ros2 launch scenario_test_runner scenario_test_runner.launch.py workflow:='$(find-pkg-share scenario_test_runner)/config/new_workflow.yaml' global_frame_rate:=20
           ros2 run scenario_test_runner result_checker.py /tmp/scenario_test_runner/result.junit.xml
         shell: bash
