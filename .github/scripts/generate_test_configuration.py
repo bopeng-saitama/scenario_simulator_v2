@@ -8,7 +8,7 @@ modified_files = result.stdout.decode().split("\n")
 
 # Create a new test configuration file
 new_workflow = {
-  "scenarios": []
+  "Scenario": []
 }
 
 # Add modified or created scenarios to the new test configuration file
