@@ -15,7 +15,7 @@ new_workflow = {
 for file in modified_files:
   if file.startswith("test_runner/scenario_test_runner/scenario/") and file.endswith(".yaml"):
     scenario_path = "$(find-pkg-share scenario_test_runner)/scenario/" + os.path.basename(file)
-    new_workflow["scenarios"].append({"path": scenario_path})
+    new_workflow["Scenario"].append({"path": scenario_path})
 
 # Write the new test configuration file
 new_workflow_file = os.path.join(os.environ['GITHUB_WORKSPACE'], 'test_runner', 'scenario_test_runner', 'config', 'new_workflow.yaml')
