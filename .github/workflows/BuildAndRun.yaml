@@ -132,6 +132,6 @@ jobs:
           source ~/ros2_ws/install/setup.bash
           cd ~/ros2_ws
           source install/local_setup.bash
-          ros2 launch scenario_test_runner scenario_test_runner.launch.py workflow:='$(find-pkg-share scenario_test_runner)/config/new_workflow.yaml' global_frame_rate:=20
+          ros2 launch scenario_test_runner scenario_test_runner.launch.py workflow:='test_runner/scenario_test_runner/config/new_workflow.yaml' global_frame_rate:=20
           ros2 run scenario_test_runner result_checker.py /tmp/scenario_test_runner/result.junit.xml
         shell: bash
