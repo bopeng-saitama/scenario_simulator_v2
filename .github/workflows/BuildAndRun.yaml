@@ -90,7 +90,7 @@ jobs:
 
       - name: Generate test configuration file
         run: |
-          python .github/scripts/generate_test_configuration.py
+          python3 .github/scripts/generate_test_configuration.py
         shell: bash
 
       - name: Display new_workflow.yaml
