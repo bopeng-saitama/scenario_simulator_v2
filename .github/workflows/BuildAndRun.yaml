@@ -70,7 +70,7 @@ jobs:
           vcs import src < src/scenario_simulator_v2/dependency_${{ matrix.rosdistro }}.repos
 
       - name: Resolve rosdep
-      if: steps.cache-build.outputs.cache-hit != 'true'
+        if: steps.cache-build.outputs.cache-hit != 'true'
         run: |
           cd ~/ros2_ws
           apt-get update
