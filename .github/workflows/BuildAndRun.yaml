@@ -70,7 +70,6 @@ jobs:
           vcs import src < src/scenario_simulator_v2/dependency_${{ matrix.rosdistro }}.repos
 
       - name: Resolve rosdep
-        if: steps.cache-build.outputs.cache-hit != 'true'
         run: |
           cd ~/ros2_ws
           apt-get update
@@ -93,11 +92,14 @@ jobs:
           python .github/scripts/generate_test_configuration.py
         shell: bash
 
+      - name: Display new_workflow.yaml
+        run: cat test_runner/scenario_test_runner/config/new_workflow.yaml
+
       - name: Upload new_workflow.yaml
         uses: actions/upload-artifact@v2
         with:
           name: new_workflow.yaml
-          path: .github/scripts/new_workflow.yaml
+          path: test_runner/scenario_test_runner/config/new_workflow.yaml
 
       - name: Build packages
         if: steps.cache-build.outputs.cache-hit != 'true'
