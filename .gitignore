@@ -1,23 +1,25 @@
-# other settings
-.vscode
+# Vim
+*.swp
+*.swo
 
-# backup file
-*.bak
+# Visual Studio Code
+.vscode/
+*.code-workspace
 
-# log file
-*.log
+# colcon
+build/
+install/
+log/
+/src/
 
-# files too large
-*.pcd
-
-# external packages
-external/*
-!external/lanelet2_matching
-!external/concealer
-
-# auto-generated files
-html
-latex
-scenario_simulator.tar
-site
+# Python
 *.pyc
+
+# Jetbrains
+.idea/
+
+# rviz Screen Capture
+capture/
+
+# CodeChecker
+.codechecker/

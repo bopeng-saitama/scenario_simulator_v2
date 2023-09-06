@@ -1,8 +1,0 @@
-<root>
-    <BehaviorTree>
-    <Fallback name="root">
-        <FollowLane name="follow_lane" />
-        <WalkStraightAction name="walk_straight" />
-    </Fallback>
-    </BehaviorTree>
-</root>

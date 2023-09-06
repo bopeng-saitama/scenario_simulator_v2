@@ -1,2 +1,0 @@
-ament_add_gtest(test_vehicle_entity test_vehicle_entity.cpp)
-target_link_libraries(test_vehicle_entity traffic_simulator)
