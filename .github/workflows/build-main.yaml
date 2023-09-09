@@ -113,10 +113,10 @@ jobs:
         id: cache-build-artifacts
         uses: actions/cache@v2
         with:
-        path: ~/ros2_ws/build
-        key: build-artifacts-${{ runner.os }}-${{ hashFiles('**/*.cpp', '**/*.h') }}
-        restore-keys: |
-          build-artifacts-${{ runner.os }}-
+          path: ~/ros2_ws/build
+          key: build-artifacts-${{ runner.os }}-${{ hashFiles('**/*.cpp', '**/*.h') }}
+          restore-keys: |
+            build-artifacts-${{ runner.os }}-
 
       - name: Build Code  
         if: steps.cache-build-artifacts.outputs.cache-hit != 'true'
