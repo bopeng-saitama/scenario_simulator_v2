@@ -21,6 +21,7 @@ jobs:
 
       - name: Run setup script
         run: |
+          chmod +x ./setup-dev-env.sh 
           ./setup-dev-env.sh -y
 
       - name: Set git config
