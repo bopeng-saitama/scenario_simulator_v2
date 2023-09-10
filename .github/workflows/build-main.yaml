@@ -73,7 +73,7 @@ jobs:
 
       - name: Check disk usage
         run: |
-        du -sh /* | sort -h
+          du -sh /* | sort -h
 
       - name: Check disk space
         run: |
