@@ -126,6 +126,14 @@ jobs:
       #     restore-keys: |
       #       build-artifacts-${{ runner.os }}-
 
+      - name: Check disk usage
+        run: |
+          du -sh /* | sort -h
+
+      - name: Check disk space
+        run: |
+          df -h
+
       - name: Build Code  
         if: steps.cache-build-artifacts.outputs.cache-hit != 'true'
         run: |
