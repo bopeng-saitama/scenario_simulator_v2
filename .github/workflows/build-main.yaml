@@ -71,6 +71,15 @@ jobs:
       - name: Checkout Repository  
         uses: actions/checkout@v3
 
+      - name: Check disk space
+        run: |
+          df -h
+          freeSpace=$(df --output=avail -h / | tail -n1 | sed 's/[^0-9]*//g')
+          if [ $freeSpace -lt 5000 ]; then  # 假设您需要至少5GB的空闲空间
+            echo "Not enough disk space. Exiting."
+            exit 1
+          fi
+
       - name: Cache ROS dependencies
         uses: actions/cache@v2
         with:
