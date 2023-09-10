@@ -71,22 +71,21 @@ jobs:
       - name: Checkout Repository  
         uses: actions/checkout@v3
 
+      - name: Check disk usage
+        run: |
+        du -sh /* | sort -h
+
       - name: Check disk space
         run: |
           df -h
-          freeSpace=$(df --output=avail -h / | tail -n1 | sed 's/[^0-9]*//g')
-          if [ $freeSpace -lt 5000 ]; then  # 假设您需要至少5GB的空闲空间
-            echo "Not enough disk space. Exiting."
-            exit 1
-          fi
 
-      - name: Cache ROS dependencies
-        uses: actions/cache@v2
-        with:
-          path: /opt/ros
-          key: ros-deps-${{ runner.os }}-${{ hashFiles('**/autoware.repos', '**/simulator.repos') }}
-          restore-keys: |
-            ros-deps-${{ runner.os }}-
+      # - name: Cache ROS dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: /opt/ros
+      #     key: ros-deps-${{ runner.os }}-${{ hashFiles('**/autoware.repos', '**/simulator.repos') }}
+      #     restore-keys: |
+      #       ros-deps-${{ runner.os }}-
 
       - name: Run Setup Script 
         run: |
@@ -118,14 +117,14 @@ jobs:
           rosdep update
           DEBIAN_FRONTEND=noninteractive rosdep install -y --from-paths src --ignore-src --rosdistro ${{ needs.load-env.outputs.rosdistro }}
 
-      - name: Cache build artifacts
-        id: cache-build-artifacts
-        uses: actions/cache@v2
-        with:
-          path: ~/ros2_ws/build
-          key: build-artifacts-${{ runner.os }}-${{ hashFiles('**/*.cpp', '**/*.h') }}
-          restore-keys: |
-            build-artifacts-${{ runner.os }}-
+      # - name: Cache build artifacts
+      #   id: cache-build-artifacts
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ~/ros2_ws/build
+      #     key: build-artifacts-${{ runner.os }}-${{ hashFiles('**/*.cpp', '**/*.h') }}
+      #     restore-keys: |
+      #       build-artifacts-${{ runner.os }}-
 
       - name: Build Code  
         if: steps.cache-build-artifacts.outputs.cache-hit != 'true'
