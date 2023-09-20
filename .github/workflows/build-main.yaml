@@ -89,23 +89,6 @@ jobs:
 
       - name: Clean space
         run: |
-          sudo rm -rf "/usr/share/dotnet" || true
-          sudo rm -rf "$AGENT_TOOLSDIRECTORY" || true
-          sudo rm -rf "/usr/local/lib/android" || true
-          sudo rm -rf "/usr/local/share/boost" || true
-          sudo rm -rf "/usr/lib/jvm" || true
-          sudo rm -rf "/usr/share/swift" || true
-          sudo rm -rf "/usr/local/julia*" || true
-          sudo rm -rf "/usr/share/kotlinc" || true
-          sudo rm -rf "/usr/local/share/edge_driver" || true
-          sudo rm -rf "/usr/local/share/chromedriver-linux64" || true
-          sudo rm -rf "/usr/local/share/gecko_driver" || true
-          sudo rm -rf "/usr/share/miniconda" || true
-          sudo rm -rf "/usr/local/share/phantomjs*" || true
-          sudo rm -rf "/usr/share/sbt" || true
-          sudo rm -rf "/usr/local/sqlpackage" || true
-          sudo npm uninstall bazel
-          rustup self uninstall -y
           sudo apt purge \
             ansible \
             apache2 \
